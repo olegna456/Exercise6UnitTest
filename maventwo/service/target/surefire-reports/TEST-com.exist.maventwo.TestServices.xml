@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.exist.maventwo.TestServices" time="0.077" tests="7" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.exist.maventwo.TestServices" time="0.083" tests="7" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="15"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-15.0.1\bin"/>
-    <property name="sun.java.command" value="C:\Users\Barrie\AppData\Local\Temp\surefire17368534743419224284\surefirebooter14933947643064400452.jar C:\Users\Barrie\AppData\Local\Temp\surefire17368534743419224284 2021-02-02T22-50-45_206-jvmRun1 surefire11522852364271176760tmp surefire_14578476399003491417tmp"/>
+    <property name="sun.java.command" value="C:\Users\Barrie\AppData\Local\Temp\surefire17648968039696627611\surefirebooter5755785937526568391.jar C:\Users\Barrie\AppData\Local\Temp\surefire17648968039696627611 2021-02-02T22-57-28_713-jvmRun1 surefire9471155279808215027tmp surefire_17965858193889567381tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="D:\maven2final\maventwo\service\target\test-classes;D:\maven2final\maventwo\service\target\classes;C:\Users\Barrie\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\Barrie\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;D:\maven2final\maventwo\util\target\classes;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\Barrie\AppData\Local\Temp\surefire17368534743419224284\surefirebooter14933947643064400452.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Barrie\AppData\Local\Temp\surefire17648968039696627611\surefirebooter5755785937526568391.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="15.0.1+9-18"/>
@@ -55,11 +55,11 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="59.0"/>
   </properties>
-  <testcase name="validateAddNewRow" classname="com.exist.maventwo.TestServices" time="0.006"/>
+  <testcase name="validateAddNewRow" classname="com.exist.maventwo.TestServices" time="0.004"/>
   <testcase name="validateCheckNull" classname="com.exist.maventwo.TestServices" time="0"/>
   <testcase name="validatePrint" classname="com.exist.maventwo.TestServices" time="0.002"/>
-  <testcase name="validateSearch" classname="com.exist.maventwo.TestServices" time="0.003"/>
+  <testcase name="validateSearch" classname="com.exist.maventwo.TestServices" time="0.004"/>
   <testcase name="setUp" classname="com.exist.maventwo.TestServices" time="0"/>
   <testcase name="validateEdit" classname="com.exist.maventwo.TestServices" time="0"/>
-  <testcase name="validateConcatenateRowAndColumn" classname="com.exist.maventwo.TestServices" time="0.001"/>
+  <testcase name="validateConcatenateRowAndColumn" classname="com.exist.maventwo.TestServices" time="0"/>
 </testsuite>

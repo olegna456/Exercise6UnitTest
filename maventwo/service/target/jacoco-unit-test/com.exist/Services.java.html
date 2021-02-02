@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Services.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">service</a> &gt; <a href="index.source.html" class="el_package">com.exist</a> &gt; <span class="el_source">Services.java</span></div><h1>Services.java</h1><pre class="source lang-java linenums">package com.exist;
+
+
+import java.util.*;
+import java.io.*;
+import org.apache.commons.lang3.*;
+
+<span class="fc" id="L8">class Services {</span>
+
+<span class="fc" id="L10">	List&lt;String&gt; listForSearch = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L11">	List&lt;Integer&gt; lengthPerKey = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L12">	List&lt;Integer&gt; lengthPerValue = new ArrayList&lt;&gt;();</span>
+
+
+	public void clearList() {
+<span class="nc" id="L16">		lengthPerValue.clear();</span>
+<span class="nc" id="L17">		lengthPerKey.clear();</span>
+<span class="nc" id="L18">	}</span>
+
+	public boolean printList(List&lt;String&gt; rowList, List&lt;String&gt; columnList, int row, int column) {
+<span class="fc" id="L21">		boolean isValid = false;</span>
+<span class="fc" id="L22">		int counter = 0,  i = 0;</span>
+<span class="fc bfc" id="L23" title="All 2 branches covered.">		while(i &lt; row) {</span>
+<span class="fc" id="L24">			int j = 0;</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">			while(j &lt; column) {</span>
+<span class="pc bpc" id="L26" title="1 of 2 branches missed.">				if(rowList.get(counter) == null) {</span>
+<span class="nc" id="L27">					j++;</span>
+				}else {
+<span class="fc" id="L29">					System.out.print(rowList.get(counter) + &quot;:&quot; + columnList.get(counter) + &quot;\t&quot;);</span>
+<span class="fc" id="L30">					j++;</span>
+				}				
+<span class="fc" id="L32">				counter++;</span>
+<span class="fc" id="L33">				isValid = true;</span>
+			}
+<span class="fc" id="L35">			System.out.println();</span>
+<span class="fc" id="L36">			i++;</span>
+<span class="fc" id="L37">		}</span>
+<span class="fc" id="L38">		return isValid;</span>
+	}
+
+	public boolean search(String userInput, int row, int column, List&lt;String&gt; rowList, List&lt;String&gt; columnList) {
+<span class="fc" id="L42">		int rowCtr = 0, columnCtr = 0, counter = 0;</span>
+<span class="fc" id="L43">		boolean isValid = false;</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">		while(rowCtr &lt; row) {</span>
+<span class="fc" id="L45">			columnCtr = 0;</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">			while(columnCtr &lt; column) {</span>
+<span class="fc" id="L47">				String concatenated = rowList.get(counter) + columnList.get(counter);</span>
+<span class="fc" id="L48">				int count = Utilities.checkOccurence(concatenated, userInput);</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">				if(count &gt; 0) {</span>
+<span class="fc" id="L50">					System.out.println(userInput + &quot; has &quot; + count + &quot; instance(s) on index &quot; + rowCtr +  &quot; &quot; + columnCtr);</span>
+<span class="fc" id="L51">					isValid = true;</span>
+				}
+<span class="fc" id="L53">				columnCtr++;</span>
+<span class="fc" id="L54">				counter++;</span>
+<span class="fc" id="L55">			}</span>
+<span class="fc" id="L56">			rowCtr++;</span>
+		}
+<span class="fc" id="L58">		return isValid;</span>
+	}
+
+	public int computeForRowAndColumnIndex(int row, int column, int rowToEdit, int columnToEdit, String newKey, String newValue, List&lt;String&gt; rowList, List&lt;String&gt; columnList) throws IOException {
+<span class="fc" id="L62">		int multiplier = Utilities.getMultiplier(rowToEdit);</span>
+<span class="fc" id="L63">		int difference = column - columnToEdit;</span>
+<span class="fc" id="L64">		int totalSize = rowList.size(); int countSizeAfterEdit;</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if(rowToEdit &gt; 0) {</span>
+<span class="nc" id="L66">			columnToEdit = (multiplier * column) + columnToEdit;</span>
+<span class="nc" id="L67">			rowToEdit = columnToEdit;</span>
+<span class="nc" id="L68">			insertToList(rowToEdit, columnToEdit, newKey, newValue, rowList, columnList, row, column);</span>
+<span class="nc" id="L69">			countSizeAfterEdit = rowList.size() - 1;</span>
+<span class="pc bpc" id="L70" title="3 of 4 branches missed.">		} else if ((rowToEdit &gt; 0) &amp;&amp; (columnToEdit &lt; column)) {</span>
+<span class="nc" id="L71">			columnToEdit = (multiplier * column) + difference;</span>
+<span class="nc" id="L72">			rowToEdit = columnToEdit;</span>
+<span class="nc" id="L73">			insertToList(rowToEdit, columnToEdit, newKey, newValue, rowList, columnList, row, column);</span>
+<span class="nc" id="L74">			countSizeAfterEdit = rowList.size() - 1;</span>
+		} else {
+<span class="fc" id="L76">			rowToEdit = columnToEdit;</span>
+<span class="fc" id="L77">			insertToList(rowToEdit, columnToEdit, newKey, newValue, rowList, columnList, row, column);</span>
+<span class="fc" id="L78">			countSizeAfterEdit = rowList.size() - 1;</span>
+		}
+<span class="fc" id="L80">		return countSizeAfterEdit - 1;</span>
+
+	}
+
+	public void insertToList(int rowToEdit, int columnToEdit, String newKey, String newValue, List&lt;String&gt; rowList, List&lt;String&gt; columnList, int row, int column) throws IOException {
+		
+<span class="pc bpc" id="L86" title="2 of 4 branches missed.">		if((!newKey.isEmpty()) &amp;&amp; (newValue.isEmpty())) {</span>
+<span class="fc" id="L87">			rowList.set(rowToEdit, newKey);</span>
+<span class="nc bnc" id="L88" title="All 4 branches missed.">		} else if ((StringUtils.isEmpty(newKey)) &amp;&amp; (StringUtils.isNotEmpty(newValue))) {</span>
+<span class="nc" id="L89">			columnList.set(columnToEdit, newValue);;</span>
+		} else {
+<span class="nc" id="L91">			rowList.set(rowToEdit, newKey);</span>
+<span class="nc" id="L92">			columnList.set(columnToEdit, newValue);</span>
+		}
+
+<span class="fc" id="L95">		ReadWrite.writeToFile(rowList, columnList, row, column);</span>
+<span class="fc" id="L96">	}</span>
+
+	public int addNewRow(int row, int column, List&lt;String&gt; rowList, List&lt;String&gt; columnList) throws IOException {
+<span class="fc" id="L99">		int rowBasedZero = row; int counter = 0;</span>
+<span class="fc" id="L100">		row = row + 1;</span>
+		// while(counter &lt; column) {
+		// 	String question = &quot;Enter key for &quot; + rowBasedZero + &quot;,&quot; + counter +&quot; : &quot;;
+		// 	String newKey = Utilities.getStringForInput(question);
+		// 	question = &quot;Enter value for &quot; +  rowBasedZero + &quot;,&quot; + counter + &quot; : &quot;;
+		// 	String newValue = Utilities.getStringForInput(question);
+		// 	rowList.add(newKey);
+		// 	columnList.add(newValue);
+		// 	counter++;
+		// }
+<span class="fc" id="L110">		int result = row + column;</span>
+
+<span class="fc" id="L112">		ReadWrite.writeToFile(rowList, columnList, row, column);</span>
+<span class="fc" id="L113">		return result;</span>
+	}
+
+	public int checkNull(List&lt;String&gt; rowList, List&lt;String&gt; columnList, int index) {
+<span class="fc" id="L117">		int counter = 0;</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		while(rowList.get(index) != null) {</span>
+<span class="fc" id="L119">			counter++;</span>
+<span class="fc" id="L120">			index++;</span>
+		}
+<span class="fc" id="L122">		return counter;</span>
+	}
+
+	public boolean concatenateRow(char input, int rowToSort, List&lt;String&gt; rowList, List&lt;String&gt; columnList, int column, int row) throws IOException {
+<span class="fc" id="L126">		boolean isValid = false;</span>
+<span class="fc" id="L127">		int multiplier = Utilities.getMultiplier(rowToSort);</span>
+<span class="fc" id="L128">		int index = Utilities.computeForIndex(rowToSort, multiplier, column);</span>
+<span class="fc" id="L129">		int columnCtr = 0; String concat = &quot;&quot;;</span>
+<span class="fc" id="L130">		int test = checkNull(rowList, columnList, index);</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if(test &gt; 0) {</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">			while(columnCtr &lt; test) {			</span>
+<span class="fc" id="L133">				String temp1 = rowList.get(index);</span>
+<span class="fc" id="L134">				String temp2 = columnList.get(index);</span>
+<span class="fc" id="L135">				lengthPerKey.add(temp1.length());</span>
+<span class="fc" id="L136">				lengthPerValue.add(temp2.length());</span>
+<span class="fc" id="L137">				concat += (temp1 + temp2);				</span>
+<span class="fc" id="L138">				 columnCtr++; index++;</span>
+<span class="fc" id="L139">			}		</span>
+		} else {
+<span class="nc bnc" id="L141" title="All 2 branches missed.">			while(columnCtr &lt; column) {</span>
+<span class="nc" id="L142">				String temp1 = rowList.get(index);</span>
+<span class="nc" id="L143">				String temp2 = columnList.get(index);</span>
+<span class="nc" id="L144">				lengthPerKey.add(temp1.length());</span>
+<span class="nc" id="L145">				lengthPerValue.add(temp2.length());</span>
+<span class="nc" id="L146">				concat += (temp1 + temp2);</span>
+<span class="nc" id="L147">				columnCtr++; index++;				</span>
+<span class="nc" id="L148">			}</span>
+		}
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">		if(input == 'A') {</span>
+<span class="nc" id="L151">			String toBeSorted = Utilities.sort(concat);</span>
+<span class="nc" id="L152">			subStringSorted(toBeSorted, rowToSort, multiplier, row, column, rowList, columnList);</span>
+<span class="nc" id="L153">			System.out.println(toBeSorted);</span>
+<span class="nc" id="L154">			isValid = true;</span>
+<span class="nc" id="L155">		} else {</span>
+<span class="fc" id="L156">			String toBeSorted = Utilities.sort(concat);</span>
+<span class="fc" id="L157">			String reversed = Utilities.reverse(toBeSorted);</span>
+<span class="fc" id="L158">			subStringSorted(reversed, rowToSort, multiplier, row, column, rowList, columnList);</span>
+<span class="fc" id="L159">			isValid = true;</span>
+		}
+<span class="fc" id="L161">		return isValid;</span>
+			
+
+	}
+
+	private void subStringSorted(String sorted, int rowToBeSorted, int multiplier, int row, int column, List&lt;String&gt; rowList, List&lt;String&gt; columnList) throws IOException {
+<span class="fc" id="L167">		int columnCtr = 0, startKey = 0, endKey = 0, startValue = 0, endValue = 0;</span>
+<span class="fc" id="L168">		int index = Utilities.computeForIndex(rowToBeSorted, multiplier, column);</span>
+<span class="fc" id="L169">		int test = checkNull(rowList, columnList, index);</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		if(test &gt; 0) {</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">			while(columnCtr &lt; test) {</span>
+<span class="fc" id="L172">				endKey = endKey + lengthPerKey.get(columnCtr);</span>
+<span class="fc" id="L173">				String temp = sorted.substring(startKey, endKey);</span>
+<span class="fc" id="L174">				rowList.set(index, temp);</span>
+<span class="fc" id="L175">				startValue = endKey;</span>
+<span class="fc" id="L176">				endValue = startValue + lengthPerValue.get(columnCtr);</span>
+<span class="fc" id="L177">				String temp2 = sorted.substring(startValue, endValue);</span>
+<span class="fc" id="L178">				columnList.set(index, temp2);</span>
+<span class="fc" id="L179">				startKey = endValue;</span>
+<span class="fc" id="L180">				endKey = startKey;</span>
+<span class="fc" id="L181">				columnCtr++;</span>
+<span class="fc" id="L182">					index++;</span>
+<span class="fc" id="L183">			}</span>
+		}else {
+<span class="nc bnc" id="L185" title="All 2 branches missed.">			while(columnCtr &lt; column) {</span>
+<span class="nc" id="L186">				endKey = endKey + lengthPerKey.get(columnCtr);</span>
+<span class="nc" id="L187">				String temp = sorted.substring(startKey, endKey);</span>
+<span class="nc" id="L188">				rowList.set(index, temp);</span>
+<span class="nc" id="L189">				startValue = endKey;</span>
+<span class="nc" id="L190">				endValue = startValue + lengthPerValue.get(columnCtr);</span>
+<span class="nc" id="L191">				String temp2 = sorted.substring(startValue, endValue);</span>
+<span class="nc" id="L192">				columnList.set(index, temp2);</span>
+<span class="nc" id="L193">				startKey = endValue;</span>
+<span class="nc" id="L194">				endKey = startKey;</span>
+<span class="nc" id="L195">				columnCtr++;</span>
+<span class="nc" id="L196">				index++;</span>
+<span class="nc" id="L197">			}</span>
+		}		
+<span class="fc" id="L199">		ReadWrite.writeToFile(rowList, columnList, row, column);</span>
+<span class="fc" id="L200">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

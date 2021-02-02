@@ -1,14 +1,16 @@
-package com.exist.maventwo;
+package com.exist;
 
 
 import java.util.*;
 import java.io.*;
+import org.apache.commons.lang3.*;
 
 class Services {
 
 	List<String> listForSearch = new ArrayList<>();
 	List<Integer> lengthPerKey = new ArrayList<>();
 	List<Integer> lengthPerValue = new ArrayList<>();
+
 
 	public void clearList() {
 		lengthPerValue.clear();
@@ -64,18 +66,18 @@ class Services {
 			columnToEdit = (multiplier * column) + columnToEdit;
 			rowToEdit = columnToEdit;
 			insertToList(rowToEdit, columnToEdit, newKey, newValue, rowList, columnList, row, column);
-			countSizeAfterEdit = rowList.size();
+			countSizeAfterEdit = rowList.size() - 1;
 		} else if ((rowToEdit > 0) && (columnToEdit < column)) {
 			columnToEdit = (multiplier * column) + difference;
 			rowToEdit = columnToEdit;
 			insertToList(rowToEdit, columnToEdit, newKey, newValue, rowList, columnList, row, column);
-			countSizeAfterEdit = rowList.size();
+			countSizeAfterEdit = rowList.size() - 1;
 		} else {
 			rowToEdit = columnToEdit;
 			insertToList(rowToEdit, columnToEdit, newKey, newValue, rowList, columnList, row, column);
-			countSizeAfterEdit = rowList.size();
+			countSizeAfterEdit = rowList.size() - 1;
 		}
-		return countSizeAfterEdit;
+		return countSizeAfterEdit - 1;
 
 	}
 
@@ -83,7 +85,7 @@ class Services {
 		
 		if((!newKey.isEmpty()) && (newValue.isEmpty())) {
 			rowList.set(rowToEdit, newKey);
-		} else if ((newKey.isEmpty()) && (!newValue.isEmpty())) {
+		} else if ((StringUtils.isEmpty(newKey)) && (StringUtils.isNotEmpty(newValue))) {
 			columnList.set(columnToEdit, newValue);;
 		} else {
 			rowList.set(rowToEdit, newKey);
